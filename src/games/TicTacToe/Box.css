@@ -1,0 +1,76 @@
+.box {
+  border: none;
+  background-color: #fff;
+  border-radius: 12%;
+  box-shadow: 0px 0px 8px #888;
+  width: 5rem;
+  height: 5rem;
+  text-align: center;
+  font-size: 5rem;
+  font-weight: bold;
+  line-height: 5rem;
+  margin: 0.5rem;
+}
+.x {
+  color: #e91010;
+}
+.o {
+  color: #a909ff;
+}
+.box:hover {
+  box-shadow: 0px 0px 8px #e91010;
+}
+.board {
+  display: grid;
+  grid-template-columns: repeat(3, 6rem);
+  place-items: center;
+  justify-content: center;
+}
+.memory-board {
+  display: grid;
+  gap: 1rem;
+  grid-template-columns: repeat(4, 6rem);
+  place-items: center;
+  justify-content: center;
+}
+.scoreBoard {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-evenly;
+  width: 17rem;
+  font-size: 1.5rem;
+  background-color: #fff;
+  margin: 3rem auto;
+  box-shadow: 0px 0px 8px #888;
+  border-radius: 0.5rem;
+}
+.score {
+  width: 100%;
+  text-align: center;
+  padding: 1rem 0;
+}
+.x-score {
+  color: #e91010;
+  border-bottom: 2px solid #e91010; /* Specify border style and color */
+  border-radius: 0.5rem 0 0 0.5rem;
+}
+
+.o-score {
+  color: #a909ff;
+  border-bottom: 2px solid #a909ff; /* Specify border style and color */
+  border-radius: 0 0.5rem 0.5rem 0;
+}
+.inactive {
+  border: 2px solid transparent;
+}
+.start-btn {
+  border: none;
+  border-radius: 0.5rem;
+  background-color: #8e1adc;
+  color: white;
+  font-size: 2rem;
+  padding: 0.5rem 1rem;
+  margin: 2rem auto;
+  display: block;
+}
