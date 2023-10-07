@@ -29,16 +29,18 @@ const Container = styled.header`
 
   top: 0;
   z-index: 999;
+  height: 2.5rem;
   display: flex;
   justify-content: space-around;
   align-items: flex-start; /* Add this line */
-  background-color: white;
+  background-color: #f7f3f0;
   border-bottom: ${({ isScrolled }) =>
-    isScrolled ? "18px solid red" : "none"};
+    isScrolled ? "0.4rem solid #484e4e" : "none"};
 
   p {
     font-size: 2rem;
     text-align: center;
+    color: #489c9c;
   }
 `;
 
@@ -47,15 +49,18 @@ const StyledUl = styled.ul`
   gap: 1.5rem;
   font-size: 1.3rem;
   padding: 0;
+  margin: 0.5rem 0;
 `;
 const StyledList = styled(Link)`
   text-decoration: none;
-
+  color: #1e1f21;
   border-radius: 12px;
   transition: transform 1s ease;
 
   &:hover {
-    color: #4141de;
-    transform: rotate(360deg) scale(1.5);
+    color: #484e4e;
+    transform: scale(1.1);
+
+    /* transform: rotate(360deg) scale(1.5); */
   }
 `;

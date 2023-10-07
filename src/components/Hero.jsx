@@ -1,6 +1,5 @@
 import React from "react";
 import styled from "styled-components";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import GithubIcon from "../assets/github.svg";
 import LinkedinIcon from "../assets/linkedin-in.svg";
 import YoutubeIcon from "../assets/youtube.svg";
@@ -16,15 +15,24 @@ const Hero = () => {
           quality first.
         </Text>
         <LinksContainer>
-          <button>Contact</button>
+          <ContactButton>Contact</ContactButton>
           <IconsContainer>
-            <IconWrapper>
+            <IconWrapper
+              href="https://github.com/your-github-link"
+              target="_blank"
+            >
               <img src={GithubIcon} alt="GitHub" />
             </IconWrapper>
-            <IconWrapper>
+            <IconWrapper
+              href="https://linkedin.com/in/your-linkedin-link"
+              target="_blank"
+            >
               <img src={LinkedinIcon} alt="LinkedIn" />
             </IconWrapper>
-            <IconWrapper>
+            <IconWrapper
+              href="https://youtube.com/your-youtube-link"
+              target="_blank"
+            >
               <img src={YoutubeIcon} alt="YouTube" />
             </IconWrapper>
           </IconsContainer>
@@ -42,60 +50,105 @@ const Hero = () => {
 
 const Container = styled.div`
   display: flex;
-`;
-
-const ImageContainer = styled.div`
-  width: 60%;
-  background-color: green;
-  img {
-    width: 100%;
-  }
+  flex-wrap: wrap;
+  justify-content: space-between;
 `;
 
 const TextContainer = styled.div`
-  width: 40%;
+  flex: 1;
   background-color: #6767dc43;
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: start;
   padding: 2rem;
+
   h1 {
     width: 90%;
+    font-size: 2rem;
+    text-align: center;
+  }
+
+  @media (max-width: 768px) {
+    flex: none;
+    width: 100%;
+    height: auto;
+    justify-content: center;
+  }
+`;
+
+const ImageContainer = styled.div`
+  flex: 1;
+  background-color: green;
+
+  img {
+    width: 100%;
+  }
+
+  @media (max-width: 768px) {
+    /* display: none; */
   }
 `;
 
 const Text = styled.p`
   width: 80%;
   line-height: 1.2rem;
+  text-align: center;
 `;
+
 const LinksContainer = styled.div`
   width: 100%;
   margin-top: 2rem;
   display: flex;
-  align-items: space-evenly;
-  button {
-    font-size: 1.6rem;
-    border: none;
-    background-color: transparent;
+  justify-content: center;
+  flex-wrap: wrap;
+
+  @media (max-width: 768px) {
+    flex-direction: column;
+    align-items: center;
   }
 `;
+
+const ContactButton = styled.button`
+  font-size: 1.6rem;
+  border: none;
+  background-color: #007bff;
+  color: #fff;
+  padding: 10px 20px;
+  border-radius: 5px;
+  margin-right: 1rem;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+
+  &:hover {
+    background-color: #0056b3;
+  }
+
+  @media (max-width: 768px) {
+    margin-bottom: 1rem;
+  }
+`;
+
 const IconsContainer = styled.div`
   display: flex;
   align-content: center;
-  justify-content: space-between;
-  margin-left: 2rem;
   gap: 1rem;
+
+  @media (max-width: 768px) {
+    justify-content: center;
+  }
 `;
 
-const IconWrapper = styled.div`
+const IconWrapper = styled.a`
   display: flex;
   align-items: center;
-  justify-content: space-between;
   cursor: pointer;
+  text-decoration: none;
+  color: #000;
+
   &:hover {
     transform: scale(1.2);
   }
+
   img {
     width: 20px;
     height: 20px;

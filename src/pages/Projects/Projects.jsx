@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import styled, { keyframes, css } from "styled-components";
 import Descriptions from "./Descriptions";
 
@@ -24,19 +24,9 @@ const slideInFromRight = keyframes`
   }
 `;
 
-const slideInFromCenter = keyframes`
-  from {
-    transform: translateX(-50%);
-    opacity: 0;
-  }
-  to {
-    transform: translateX(0);
-    opacity: 1;
-  }
-`;
-
 const Projects = () => {
-  const [isScrolled, setScrolled] = React.useState(false);
+  const [isScrolled, setScrolled] = useState(false);
+  const [hasAnimated, setHasAnimated] = useState(false);
   const cardRef = React.useRef(null);
 
   useEffect(() => {
@@ -48,10 +38,14 @@ const Projects = () => {
       const cardHeight = cardRef.current.clientHeight;
       const adjustedTopPosition = cardPosition.top - navbarHeight;
 
-      if (adjustedTopPosition < windowHeight - cardHeight) {
+      if (adjustedTopPosition < windowHeight - cardHeight && !hasAnimated) {
         setScrolled(true);
-      } else {
-        setScrolled(false);
+        setHasAnimated(true);
+      } else if (
+        adjustedTopPosition >= windowHeight - cardHeight &&
+        hasAnimated
+      ) {
+        setHasAnimated(false);
       }
     };
 
@@ -61,7 +55,7 @@ const Projects = () => {
     return () => {
       window.removeEventListener("scroll", handleScroll);
     };
-  }, []);
+  }, [hasAnimated]);
 
   return (
     <Container>
@@ -73,10 +67,7 @@ const Projects = () => {
             initialDelay={0}
           >
             <ImageContainer>
-              <img
-                src="https://cdn.dribbble.com/userupload/7975121/file/original-afcf4ca1dde18dee5ca4bf9f1003369a.png?compress=1&resize=1024x768"
-                alt="reserve"
-              />
+              <img src="src/assets/image/frang.ge.png" alt="reserve" />
             </ImageContainer>
           </AnimatedElement>
 
@@ -96,6 +87,8 @@ const Projects = () => {
   );
 };
 
+// Rest of your styled components and export statement...
+
 const Container = styled.div``;
 
 const ItemContainer = styled.div`
@@ -103,10 +96,21 @@ const ItemContainer = styled.div`
   margin: 2rem;
   gap: 3rem;
   border-radius: 1rem;
+  /* outline: 1px solid red; */
+  @media (max-width: 541px) {
+    display: flex;
+    flex-direction: column;
+  }
 `;
 
 const AnimatedElement = styled.div`
   opacity: ${(props) => (props.isScrolled ? 1 : 0)};
+  /* outline: 1px solid black; */
+  margin: 0 auto;
+  display: flex;
+  width: 100%;
+  justify-content: center;
+  align-items: center;
   ${(props) =>
     props.isScrolled &&
     css`
@@ -116,12 +120,22 @@ const AnimatedElement = styled.div`
 `;
 
 const ImageContainer = styled.div`
-  min-width: 600px;
+  min-width: 50%;
   border-radius: 1rem;
+  display: flex;
+
+  /* justify-content: center; */
 
   img {
     width: 80%;
     border-radius: 1rem;
+  }
+  @media (max-width: 541px) {
+    min-width: 100%;
+    img {
+      width: 100%;
+      border-radius: 1rem;
+    }
   }
 `;
 
@@ -129,6 +143,9 @@ const TextContainer = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
+  @media (max-width: 541px) {
+    max-width: 100%;
+  }
 `;
 
 export default Projects;
