@@ -8,12 +8,16 @@ import Hero from "./components/Hero";
 import MemoryGame from "./games/MemoryGame/MemoryGame";
 import { Route, Routes } from "react-router-dom";
 import Projects from "./pages/Projects/Projects";
+import ScrollDownArrow from "./components/ScrollDownArrow";
 const App = () => {
   return (
     <div>
       <Header />
       <Hero />
       <Projects />
+      <Contact />
+      <ScrollDownArrow />
+
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/games" element={<Games />} />

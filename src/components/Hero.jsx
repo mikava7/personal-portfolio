@@ -1,19 +1,39 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import styled from "styled-components";
 import GithubIcon from "../assets/github.svg";
 import LinkedinIcon from "../assets/linkedin-in.svg";
 import YoutubeIcon from "../assets/youtube.svg";
 
 const Hero = () => {
+  const [displayedText, setDisplayedText] = useState("");
+  const fullText = "Hello! I am Irakli, a Full stack developer!";
+  const typingSpeed = 100;
+
+  useEffect(() => {
+    let currentIndex = 0;
+
+    const typingInterval = setInterval(() => {
+      if (currentIndex < fullText.length) {
+        setDisplayedText(fullText.substring(0, currentIndex + 1));
+        currentIndex++;
+      } else {
+        clearInterval(typingInterval);
+      }
+    }, typingSpeed);
+
+    return () => {
+      clearInterval(typingInterval);
+    };
+  }, []);
   return (
     <Container>
       <TextContainer>
-        <h1>Hello! I am Irakli, a Junior MERN stack developer!</h1>
-        <Text>
+        <h1>{displayedText}</h1>
+        {/* <Text>
           I help companies from all over the world with tailor-made solutions.
           With each project, I push my work to new horizons, always putting
           quality first.
-        </Text>
+        </Text> */}
         <LinksContainer>
           <ContactButton>Contact</ContactButton>
           <IconsContainer>
@@ -52,18 +72,21 @@ const Container = styled.div`
   display: flex;
   flex-wrap: wrap;
   justify-content: space-between;
+  background-color: #6767dc43;
+
+  height: 85vh;
 `;
 
 const TextContainer = styled.div`
   flex: 1;
-  background-color: #6767dc43;
   display: flex;
   flex-direction: column;
   align-items: center;
-  padding: 2rem;
+  justify-content: center;
+  /* padding: 2rem; */
 
   h1 {
-    width: 90%;
+    width: 100%;
     font-size: 2rem;
     text-align: center;
   }
@@ -77,8 +100,8 @@ const TextContainer = styled.div`
 `;
 
 const ImageContainer = styled.div`
+  margin: auto 1rem;
   flex: 1;
-  /* background-color: green; */
 
   img {
     width: 100%;

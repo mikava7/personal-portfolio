@@ -8,7 +8,8 @@ const ContactContainer = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
-  margin-top: 20px;
+  height: 85vh;
+  background: violet;
 `;
 
 const ContactInfo = styled.div`
@@ -72,7 +73,8 @@ const Contact = () => {
   });
 
   return (
-    <ContactContainer>
+    <ContactContainer id="projects-section2">
+      <h1>Contact</h1>
       <ContactInfo>
         <Email>Email: email@example.com</Email>
         <PhoneNumber>Phone: 123-456-7890</PhoneNumber>

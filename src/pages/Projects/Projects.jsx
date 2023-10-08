@@ -59,7 +59,8 @@ const Projects = () => {
 
   return (
     <Container>
-      <div>
+      <h1 id="header">Projects</h1>
+      <div id="projects-section1" ref={cardRef}>
         <ItemContainer isScrolled={isScrolled} ref={cardRef}>
           <AnimatedElement
             isScrolled={isScrolled}
@@ -89,7 +90,13 @@ const Projects = () => {
 
 // Rest of your styled components and export statement...
 
-const Container = styled.div``;
+const Container = styled.div`
+  height: 85vh;
+  background: yellow;
+  h1 {
+    text-align: center;
+  }
+`;
 
 const ItemContainer = styled.div`
   display: flex;
