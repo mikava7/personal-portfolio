@@ -78,7 +78,7 @@ const TextContainer = styled.div`
 
 const ImageContainer = styled.div`
   flex: 1;
-  background-color: green;
+  /* background-color: green; */
 
   img {
     width: 100%;
