@@ -28,6 +28,11 @@ const Projects = () => {
   const [isScrolled, setScrolled] = useState(false);
   const [hasAnimated, setHasAnimated] = useState(false);
   const cardRef = React.useRef(null);
+  const projectRef = React.useRef(null);
+
+  const scrollToTop = () => {
+    projectRef.current.scrollIntoView({ behavior: "smooth", block: "start" });
+  };
 
   useEffect(() => {
     const handleScroll = () => {
@@ -58,9 +63,11 @@ const Projects = () => {
   }, [hasAnimated]);
 
   return (
-    <Container>
-      <h1 id="header">Projects</h1>
-      <div id="projects-section1" ref={cardRef}>
+    <ProjectsContainer>
+      <h1 style={{ paddingTop: "2rem" }} ref={projectRef} onClick={scrollToTop}>
+        Projects
+      </h1>
+      <div ref={cardRef}>
         <ItemContainer isScrolled={isScrolled} ref={cardRef}>
           <AnimatedElement
             isScrolled={isScrolled}
@@ -84,29 +91,17 @@ const Projects = () => {
         </ItemContainer>
         {/* Repeat the above structure for other items */}
       </div>
-    </Container>
+    </ProjectsContainer>
   );
 };
 
 // Rest of your styled components and export statement...
 
-const Container = styled.div`
+const ProjectsContainer = styled.div`
   height: 85vh;
-  background: yellow;
+  /* background: yellow; */
   h1 {
     text-align: center;
-  }
-`;
-
-const ItemContainer = styled.div`
-  display: flex;
-  margin: 2rem;
-  gap: 3rem;
-  border-radius: 1rem;
-  /* outline: 1px solid red; */
-  @media (max-width: 541px) {
-    display: flex;
-    flex-direction: column;
   }
 `;
 
@@ -126,16 +121,32 @@ const AnimatedElement = styled.div`
     `}
 `;
 
+const ItemContainer = styled.div`
+  display: flex;
+  margin: 2rem;
+  gap: 3rem;
+  border-radius: 1rem;
+  /* min-height: 350px; */
+  /* outline: 1px solid red; */
+  @media (max-width: 541px) {
+    display: flex;
+    flex-direction: column;
+  }
+`;
+
 const ImageContainer = styled.div`
   min-width: 50%;
   border-radius: 1rem;
   display: flex;
-
-  /* justify-content: center; */
+  height: 100%; /* Make sure the image takes the full height of the container */
+  justify-content: center;
+  /* outline: 1px solid blue; */
 
   img {
-    width: 80%;
+    width: 90%;
     border-radius: 1rem;
+    height: 100%; /* Ensure the image takes the full height of its container */
+    object-fit: cover; /* Preserve aspect ratio and cover the entire space */
   }
   @media (max-width: 541px) {
     min-width: 100%;
@@ -150,9 +161,11 @@ const TextContainer = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
+  height: 100%;
+  justify-content: center;
+  /* outline: 1px solid blue; */
   @media (max-width: 541px) {
-    max-width: 100%;
+    min-width: 100%;
   }
 `;
-
 export default Projects;

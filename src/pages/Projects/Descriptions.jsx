@@ -34,7 +34,7 @@ const Descriptions = () => {
                   target="_blank"
                   rel="noopener noreferrer"
                 >
-                  View Project
+                  Visit Website
                 </a>
               </ProjectLink>
             )}
@@ -75,8 +75,8 @@ const Container = styled.div`
 
 const ProjectCard = styled.div`
   width: 80%;
-  max-width: 700px;
-  margin: 20px;
+  /* max-width: 700px; */
+  /* margin: 20px; */
   padding: 20px;
   background-color: #fff;
   border-radius: 8px;

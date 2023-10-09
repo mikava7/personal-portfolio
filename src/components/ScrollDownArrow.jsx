@@ -4,6 +4,7 @@ import { FaAngleDown, FaAngleUp } from "react-icons/fa";
 
 const ScrollDownArrow = () => {
   const sectionIds = [
+    "projects-section",
     "projects-section1",
     "projects-section2",
     "projects-section3",

@@ -9,24 +9,22 @@ import MemoryGame from "./games/MemoryGame/MemoryGame";
 import { Route, Routes } from "react-router-dom";
 import Projects from "./pages/Projects/Projects";
 import ScrollDownArrow from "./components/ScrollDownArrow";
+import { Element } from "react-scroll";
+
 const App = () => {
   return (
     <div>
       <Header />
-      <Hero />
-      <Projects />
-      <Contact />
-      <ScrollDownArrow />
-
-      <Routes>
-        <Route path="/" element={<Home />} />
-        <Route path="/games" element={<Games />} />
-        <Route path="/tictactoe" element={<TicTacToe />} />
-        <Route path="/contact" element={<Contact />} />
-        <Route path="/memoryGame" element={<MemoryGame />} />
-      </Routes>
+      <Element name="hero">
+        <Hero />
+      </Element>
+      <Element name="projects">
+        <Projects />
+      </Element>
+      <Element name="contact">
+        <Contact />
+      </Element>
     </div>
   );
 };
-
 export default App;

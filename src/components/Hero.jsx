@@ -26,14 +26,10 @@ const Hero = () => {
     };
   }, []);
   return (
-    <Container>
+    <HeroContainer id="projects-section">
       <TextContainer>
         <h1>{displayedText}</h1>
-        {/* <Text>
-          I help companies from all over the world with tailor-made solutions.
-          With each project, I push my work to new horizons, always putting
-          quality first.
-        </Text> */}
+
         <LinksContainer>
           <ContactButton>Contact</ContactButton>
           <IconsContainer>
@@ -64,11 +60,11 @@ const Hero = () => {
           alt="image"
         />
       </ImageContainer>
-    </Container>
+    </HeroContainer>
   );
 };
 
-const Container = styled.div`
+const HeroContainer = styled.div`
   display: flex;
   flex-wrap: wrap;
   justify-content: space-between;
