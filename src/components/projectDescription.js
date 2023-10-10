@@ -4,7 +4,7 @@ export const projectDescription = [
     projectLink: "https://www.frang.ge",
 
     description:
-      "The French Language Learning App is a comprehensive platform designed to help users master the French language efficiently. With a user-friendly interface and a wide range of features, it provides an immersive learning experience. Whether you're a beginner or looking to refine your French skills, this app has you covered.",
+      "The French Language Learning App is a comprehensive platform designed to help users master the French language efficiently. With a user-friendly interface and a wide range of features, it provides an immersive learning experience.",
     features: [
       {
         title: "User Roles",

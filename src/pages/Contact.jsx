@@ -2,7 +2,7 @@ import React from "react";
 import styled from "styled-components";
 import { Formik, Form, Field } from "formik";
 import * as Yup from "yup";
-
+import { ProjectHeader } from "../Styles/GlobalStyles";
 const Contact = () => {
   const contactRef = React.useRef(null);
   const scrollToTop = () => {
@@ -23,12 +23,16 @@ const Contact = () => {
 
   return (
     <ContactContainer>
-      <h1 style={{ paddingTop: "2rem" }} ref={contactRef} onClick={scrollToTop}>
+      <ProjectHeader
+        style={{ paddingTop: "2rem" }}
+        ref={contactRef}
+        onClick={scrollToTop}
+      >
         Contact
-      </h1>
+      </ProjectHeader>
       <ContactInfo>
-        <Email>Email: email@example.com</Email>
-        <PhoneNumber>Phone: 123-456-7890</PhoneNumber>
+        <Email>Email: i.mikava365@gmail.com</Email>
+        <PhoneNumber>Phone: +32 455 11 77 78</PhoneNumber>
       </ContactInfo>
       <Formik
         initialValues={{
@@ -82,6 +86,7 @@ const ContactContainer = styled.div`
   padding: 2rem;
   background: #f8f8f8;
   min-height: 100vh;
+  min-width: 100%;
 `;
 
 const ContactInfo = styled.div`

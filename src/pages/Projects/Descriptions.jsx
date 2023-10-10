@@ -71,6 +71,7 @@ const Container = styled.div`
   justify-content: center;
   background-color: #f7f3f0;
   border-radius: 12px;
+  /* outline: 1px solid red; */
 `;
 
 const ProjectCard = styled.div`
@@ -84,7 +85,7 @@ const ProjectCard = styled.div`
   transition: transform 0.3s ease-in-out;
 
   &:hover {
-    transform: scale(1.02);
+    /* transform: scale(1.02); */
   }
 `;
 
@@ -95,12 +96,14 @@ const ProjectTitle = styled.h3`
 
 const ProjectDescription = styled.p`
   text-indent: 1em;
-  line-height: 1.4;
+  line-height: 1.2;
 `;
 
 const FeatureList = styled.ul`
   list-style: none;
   padding: 0;
+  height: 250px;
+  overflow-y: scroll;
 `;
 
 const Feature = styled.li`

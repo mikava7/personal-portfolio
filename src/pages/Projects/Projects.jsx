@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import styled, { keyframes, css } from "styled-components";
 import Descriptions from "./Descriptions";
-
+import { ProjectHeader } from "../../Styles/GlobalStyles";
 const slideInFromLeft = keyframes`
   from {
     transform: translateX(-100%);
@@ -64,9 +64,13 @@ const Projects = () => {
 
   return (
     <ProjectsContainer>
-      <h1 style={{ paddingTop: "2rem" }} ref={projectRef} onClick={scrollToTop}>
+      <ProjectHeader
+        style={{ paddingTop: "2rem" }}
+        ref={projectRef}
+        onClick={scrollToTop}
+      >
         Projects
-      </h1>
+      </ProjectHeader>
       <div ref={cardRef}>
         <ItemContainer isScrolled={isScrolled} ref={cardRef}>
           <AnimatedElement
@@ -95,11 +99,8 @@ const Projects = () => {
   );
 };
 
-// Rest of your styled components and export statement...
-
 const ProjectsContainer = styled.div`
   height: 85vh;
-  /* background: yellow; */
   h1 {
     text-align: center;
   }

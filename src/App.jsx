@@ -10,7 +10,7 @@ import { Route, Routes } from "react-router-dom";
 import Projects from "./pages/Projects/Projects";
 import ScrollDownArrow from "./components/ScrollDownArrow";
 import { Element } from "react-scroll";
-
+import PuzzleGame from "./components/game/Puzzle";
 const App = () => {
   return (
     <div>
@@ -24,6 +24,8 @@ const App = () => {
       <Element name="contact">
         <Contact />
       </Element>
+      <Element name="contact">Contact </Element>
+      {/* <PuzzleGame /> */}
     </div>
   );
 };

@@ -3,6 +3,7 @@ import styled from "styled-components";
 import GithubIcon from "../assets/github.svg";
 import LinkedinIcon from "../assets/linkedin-in.svg";
 import YoutubeIcon from "../assets/youtube.svg";
+import { Link as ScrollLink } from "react-scroll";
 
 const Hero = () => {
   const [displayedText, setDisplayedText] = useState("");
@@ -31,16 +32,16 @@ const Hero = () => {
         <h1>{displayedText}</h1>
 
         <LinksContainer>
-          <ContactButton>Contact</ContactButton>
+          <ScrollLink to="contact" smooth={true} duration={500}>
+            <ContactButton>Contact</ContactButton>
+          </ScrollLink>
+
           <IconsContainer>
-            <IconWrapper
-              href="https://github.com/your-github-link"
-              target="_blank"
-            >
+            <IconWrapper href="https://github.com/mikava7" target="_blank">
               <img src={GithubIcon} alt="GitHub" />
             </IconWrapper>
             <IconWrapper
-              href="https://linkedin.com/in/your-linkedin-link"
+              href="https://www.linkedin.com/in/irakli-mikava-b65532252/"
               target="_blank"
             >
               <img src={LinkedinIcon} alt="LinkedIn" />
@@ -70,7 +71,7 @@ const HeroContainer = styled.div`
   justify-content: space-between;
   background-color: #6767dc43;
 
-  height: 85vh;
+  height: 80vh;
 `;
 
 const TextContainer = styled.div`

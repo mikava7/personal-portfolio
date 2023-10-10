@@ -23,6 +23,11 @@ const Header = () => {
             Contact
           </ScrollLink>
         </StyledList>
+        <StyledList>
+          <ScrollLink to="PuzzleGame" smooth={true} duration={500}>
+            games
+          </ScrollLink>
+        </StyledList>
       </Nav>
     </Container>
   );
