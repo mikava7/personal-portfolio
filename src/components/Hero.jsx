@@ -71,7 +71,10 @@ const HeroContainer = styled.div`
   justify-content: space-between;
   background-color: #6767dc43;
 
-  height: 80vh;
+  height: 85vh;
+  @media (max-width: 541px) {
+    height: 80vh;
+  }
 `;
 
 const TextContainer = styled.div`
@@ -80,7 +83,7 @@ const TextContainer = styled.div`
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  /* padding: 2rem; */
+  padding: 1rem;
 
   h1 {
     width: 100%;
@@ -94,18 +97,25 @@ const TextContainer = styled.div`
     height: auto;
     justify-content: center;
   }
+  h1 {
+    @media (max-width: 541px) {
+      font-size: 1.4rem;
+      margin-right: 1rem;
+      /* outline: 1px solid red; */
+      width: 90%;
+      height: 4rem;
+    }
+  }
 `;
 
 const ImageContainer = styled.div`
-  margin: auto 1rem;
-  flex: 1;
-
+  width: 60%;
+  display: flex;
+  justify-content: center;
+  margin: 0 auto;
   img {
     width: 100%;
-  }
-
-  @media (max-width: 768px) {
-    /* display: none; */
+    object-fit: contain;
   }
 `;
 

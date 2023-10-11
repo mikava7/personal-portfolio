@@ -3,7 +3,7 @@ import styled, { keyframes } from "styled-components";
 import GithubIcon from "../../assets/github.svg";
 import { projectDescription } from "../../components/projectDescription";
 import { FaArrowDown } from "react-icons/fa";
-
+import { floatAnimation } from "../../Styles/GlobalStyles";
 const Descriptions = () => {
   const [expand, setExpand] = useState(false);
   const scrollRef = useRef(null);
@@ -31,7 +31,7 @@ const Descriptions = () => {
   }, []);
 
   return (
-    <Container>
+    <>
       {projectDescription.map((project) => (
         <ProjectCard key={project.title}>
           <ProjectTitle>{project.title}</ProjectTitle>
@@ -79,7 +79,7 @@ const Descriptions = () => {
           )}
         </ProjectCard>
       ))}
-    </Container>
+    </>
   );
 };
 
@@ -87,24 +87,21 @@ export default Descriptions;
 
 // Styled components...
 
-const Container = styled.div`
-  width: 100%;
-  height: 100%;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  background-color: #f7f3f0;
-  border-radius: 12px;
-  /* outline: 1px solid red; */
-`;
 const ProjectCard = styled.div`
-  width: 80%;
+  width: 90%;
   padding: 20px;
   background-color: #fff;
-  border-radius: 8px;
+  border-radius: 0 8px 8px 0;
   box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
   transition: transform 0.3s ease-in-out;
+  height: 541px;
+  position: relative;
+  overflow-y: hidden;
+  @media (max-width: 541px) {
+    border-radius: 0 0 8px 8px;
+    width: 89%;
+    height: 480px;
+  }
 `;
 
 const ProjectTitle = styled.h3`
@@ -114,8 +111,17 @@ const ProjectTitle = styled.h3`
 
 const ProjectDescription = styled.p`
   text-indent: 1em;
-  line-height: 1.6; /* Increase line height for better readability */
-  font-size: 1.2rem; /* Adjust font size as needed */
+  line-height: 1.6;
+  font-size: 1.2rem;
+
+  @media (min-width: 555px) and (max-width: 769px) {
+    line-height: 1.4;
+    font-size: 1.1;
+  }
+  @media (max-width: 554px) {
+    line-height: 1.2;
+    font-size: 1.1;
+  }
 `;
 
 const FeatureList = styled.ul`
@@ -123,6 +129,13 @@ const FeatureList = styled.ul`
   padding: 0;
   height: 250px;
   overflow-y: scroll;
+  /* outline: 1px solid red; */
+  @media (min-width: 555px) and (max-width: 769px) {
+    height: 200px;
+  }
+  @media (max-width: 554px) {
+    height: 180px;
+  }
 `;
 
 const Feature = styled.li`
@@ -138,19 +151,11 @@ const FeatureTitle = styled.strong`
 const FeatureDescription = styled.span`
   font-size: 1rem;
 `;
-const floatAnimation = keyframes`
-  0%, 100% {
-    transform: translateY(0);
-  }
-  50% {
-    transform: translateY(-5px);
-  }
-`;
 
 const ScrollIndicator = styled.div`
-  position: fixed;
-  bottom: 50px;
-  right: 40px;
+  position: absolute;
+  bottom: 85px;
+  right: 40px; /* Adjust the position from the right as needed */
   display: flex;
   justify-content: center;
   align-items: center;
@@ -164,17 +169,30 @@ const ScrollIndicator = styled.div`
     opacity: 1;
   }
 `;
-
 const ProjectLinks = styled.div`
   display: flex;
   justify-content: space-between;
   align-items: center;
   margin-top: 20px;
+  @media (min-width: 555px) and (max-width: 769px) {
+    margin-top: 20px;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+  }
+  @media (max-width: 554px) {
+    margin-top: 20px;
+    display: flex;
+
+    justify-content: space-around;
+  }
 `;
 
 const ProjectLink = styled.div`
   text-align: center;
-
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
   a {
     display: inline-block;
     padding: 10px 20px;
@@ -188,19 +206,26 @@ const ProjectLink = styled.div`
       background-color: #0056b3;
     }
   }
+  @media (min-width: 555px) and (max-width: 767px) {
+    margin-left: -5px;
+  }
+  @media (max-width: 554px) {
+    padding: 5px 10px;
+    margin-left: -5px;
+  }
 `;
 
 const ExpandButton = styled.button`
   background-color: transparent;
   border: none;
   cursor: pointer;
-  color: #007bff; /* Use a contrasting color */
+  color: #007bff;
   font-weight: bold;
-  text-decoration: underline; /* Underline the button text */
+  text-decoration: underline;
   transition: color 0.3s ease;
 
   &:hover {
-    color: #0056b3; /* Change color on hover */
+    color: #0056b3;
   }
 `;
 
@@ -209,7 +234,8 @@ const IconWrapper = styled.div`
   align-items: center;
   justify-content: space-between;
   cursor: pointer;
-  margin-top: 20px;
+
+  /* outline: 1px solid red; */
 `;
 
 const GithubIconImg = styled.img`

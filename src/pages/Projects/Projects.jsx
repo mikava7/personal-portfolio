@@ -1,35 +1,20 @@
 import React, { useEffect, useState } from "react";
 import styled, { keyframes, css } from "styled-components";
 import Descriptions from "./Descriptions";
-import { ProjectHeader } from "../../Styles/GlobalStyles";
-const slideInFromLeft = keyframes`
-  from {
-    transform: translateX(-100%);
-    opacity: 0;
-  }
-  to {
-    transform: translateX(0);
-    opacity: 1;
-  }
-`;
-
-const slideInFromRight = keyframes`
-  from {
-    transform: translateX(100%);
-    opacity: 0;
-  }
-  to {
-    transform: translateX(0);
-    opacity: 1;
-  }
-`;
+import {
+  ProjectHeader,
+  floatAnimation,
+  slideInFromLeft,
+  slideInFromRight,
+} from "../../Styles/GlobalStyles";
+import { projectDescription } from "../../components/projectDescription";
 
 const Projects = () => {
   const [isScrolled, setScrolled] = useState(false);
   const [hasAnimated, setHasAnimated] = useState(false);
   const cardRef = React.useRef(null);
   const projectRef = React.useRef(null);
-
+  const [projectIndex, setProjectIndex] = useState(0);
   const scrollToTop = () => {
     projectRef.current.scrollIntoView({ behavior: "smooth", block: "start" });
   };
@@ -62,6 +47,11 @@ const Projects = () => {
     };
   }, [hasAnimated]);
 
+  const frontend = projectDescription[projectIndex].tools.frontend;
+  const backend = projectDescription[projectIndex].tools.backend;
+
+  console.log(frontend);
+
   return (
     <ProjectsContainer>
       <ProjectHeader
@@ -73,17 +63,25 @@ const Projects = () => {
       </ProjectHeader>
       <div ref={cardRef}>
         <ItemContainer isScrolled={isScrolled} ref={cardRef}>
-          <AnimatedElement
+          <AnimatedImage
             isScrolled={isScrolled}
             animation={slideInFromLeft}
             initialDelay={0}
           >
             <ImageContainer>
-              <img src="src/assets/image/frang.ge.png" alt="reserve" />
+              <img src="src/assets/frang.ge.png" alt="reserve" />
+              <Tools>
+                {frontend.map((tool, index) => (
+                  <Tool key={index}>{tool}</Tool>
+                ))}
+                {backend.map((tool, index) => (
+                  <Tool key={index}>{tool}</Tool>
+                ))}
+              </Tools>
             </ImageContainer>
-          </AnimatedElement>
+          </AnimatedImage>
 
-          <AnimatedElement
+          <AnimatedDescription
             isScrolled={isScrolled}
             animation={slideInFromRight}
             initialDelay={0}
@@ -91,7 +89,7 @@ const Projects = () => {
             <TextContainer>
               <Descriptions />
             </TextContainer>
-          </AnimatedElement>
+          </AnimatedDescription>
         </ItemContainer>
         {/* Repeat the above structure for other items */}
       </div>
@@ -101,15 +99,110 @@ const Projects = () => {
 
 const ProjectsContainer = styled.div`
   height: 85vh;
+  background-color: #bcbcfa43;
+
   h1 {
     text-align: center;
+  }
+
+  @media (max-width: 541px) {
+    height: 100%;
   }
 `;
 
 const AnimatedElement = styled.div`
   opacity: ${(props) => (props.isScrolled ? 1 : 0)};
-  /* outline: 1px solid black; */
   margin: 0 auto;
+  display: flex;
+  width: 100%;
+  justify-content: center;
+  align-items: center;
+  ${(props) =>
+    props.isScrolled &&
+    css`
+      animation: ${props.animation} 1.3s ease-in-out ${props.initialDelay}s
+        forwards;
+    `}
+
+  @media (max-width: 541px) {
+    opacity: 1;
+    animation: none; /* Disable animation for mobile view */
+  }
+`;
+
+const ItemContainer = styled.div`
+  display: flex;
+  margin: 2rem;
+
+  border-radius: 1rem;
+  height: 30%; /* Set the height to 30% */
+  width: 90%; /* Set the width to 90% */
+  margin: 0 auto; /* Center the container horizontally */
+
+  @media (max-width: 541px) {
+    height: auto; /* Reset height for mobile view */
+    flex-direction: column;
+  }
+`;
+
+const ImageContainer = styled.div`
+  flex: 1;
+  width: 90%;
+  height: 585px; /* Set a fixed height */
+  display: flex;
+  position: relative;
+  justify-content: center;
+  align-items: center;
+  /* outline: 1px solid red; */
+  box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+
+  img {
+    max-width: 100%;
+    max-height: 100%;
+    width: 100%; /* Set a fixed width */
+    height: 100%; /* Set a fixed height */
+    border-radius: 8px 0 0 8px;
+    object-fit: cover; /* Retain aspect ratio while covering */
+    @media (max-width: 541px) {
+      border-radius: 8px 8px 0 0;
+    }
+  }
+
+  @media (max-width: 541px) {
+    width: 100%;
+    border-radius: 1rem 1rem 0 0;
+  }
+`;
+
+const Tools = styled.div`
+  position: absolute;
+  bottom: 20px;
+  width: 90%;
+  z-index: 999;
+  margin: 0 3rem;
+  display: flex;
+  flex-wrap: wrap;
+`;
+const Tool = styled.span`
+  display: inline;
+  padding: 0.2rem 0.4rem;
+  background: #5a3085;
+  color: white;
+  border-radius: 8px;
+  margin-left: 0.4rem;
+  margin-bottom: 0.4rem;
+`;
+const TextContainer = styled.div`
+  flex: 2;
+  /* Add any other styles you need */
+
+  @media (max-width: 541px) {
+    width: 100%; /* Adjust width for mobile view */
+  }
+`;
+
+const AnimatedImage = styled.div`
+  opacity: ${(props) => (props.isScrolled ? 1 : 0)};
   display: flex;
   width: 100%;
   justify-content: center;
@@ -122,51 +215,18 @@ const AnimatedElement = styled.div`
     `}
 `;
 
-const ItemContainer = styled.div`
+const AnimatedDescription = styled.div`
+  opacity: ${(props) => (props.isScrolled ? 1 : 0)};
   display: flex;
-  margin: 2rem;
-  gap: 3rem;
-  border-radius: 1rem;
-  /* min-height: 350px; */
-  /* outline: 1px solid red; */
-  @media (max-width: 541px) {
-    display: flex;
-    flex-direction: column;
-  }
-`;
-
-const ImageContainer = styled.div`
-  min-width: 50%;
-  border-radius: 1rem;
-  display: flex;
-  height: 100%; /* Make sure the image takes the full height of the container */
-  justify-content: center;
-  /* outline: 1px solid blue; */
-
-  img {
-    width: 90%;
-    border-radius: 1rem;
-    height: 100%; /* Ensure the image takes the full height of its container */
-    object-fit: cover; /* Preserve aspect ratio and cover the entire space */
-  }
-  @media (max-width: 541px) {
-    min-width: 100%;
-    img {
-      width: 100%;
-      border-radius: 1rem;
-    }
-  }
-`;
-
-const TextContainer = styled.div`
-  display: flex;
+  width: 100%;
   justify-content: center;
   align-items: center;
-  height: 100%;
-  justify-content: center;
-  /* outline: 1px solid blue; */
-  @media (max-width: 541px) {
-    min-width: 100%;
-  }
+  ${(props) =>
+    props.isScrolled &&
+    css`
+      animation: ${props.animation} 1.3s ease-in-out ${props.initialDelay}s
+        forwards;
+    `}
 `;
+
 export default Projects;

@@ -69,13 +69,13 @@ export const projectDescription = [
       },
     ],
     tools: {
-      frontend: ["React", "Redux", "React Router", "Styled Components"],
+      frontend: ["React", "React-Router", "Styled-Components", "Redux-toolkit"],
       backend: [
         "Node.js",
         "Express",
         "MongoDB",
-        "JWT Authentication",
         "Bcrypt",
+        "JWT-Authentication",
       ],
     },
   },

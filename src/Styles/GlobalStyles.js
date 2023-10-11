@@ -8,6 +8,8 @@ const GlobalStyles = createGlobalStyle`
         box-sizing:border-box;
         margin: 0;
         padding: 0;
+        background-color: #bcbcfa43;
+        overflow-x: hidden
 
   }
   p,ul{
@@ -29,6 +31,7 @@ export const ProjectHeader = styled.h1`
   margin: 2rem auto;
   padding-bottom: 0.3rem;
   cursor: pointer;
+
   @keyframes floating {
     0%,
     100% {
@@ -51,7 +54,7 @@ export const ProjectHeader = styled.h1`
     background: linear-gradient(
       90deg,
       transparent,
-      #007bff,
+      #4e4eb1,
       transparent
     ); /* Adjust the border color */
     background-size: 200% 100%;
@@ -67,5 +70,34 @@ export const ProjectHeader = styled.h1`
     }
   }
 `;
+export const floatAnimation = keyframes`
+  0%, 100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-5px);
+  }
+`;
 
+export const slideInFromLeft = keyframes`
+  from {
+    transform: translateX(-100%);
+    opacity: 0;
+  }
+  to {
+    transform: translateX(0);
+    opacity: 1;
+  }
+`;
+
+export const slideInFromRight = keyframes`
+  from {
+    transform: translateX(100%);
+    opacity: 0;
+  }
+  to {
+    transform: translateX(0);
+    opacity: 1;
+  }
+`;
 export default GlobalStyles;

@@ -2,11 +2,14 @@
 import React from "react";
 import styled from "styled-components";
 import { Link as ScrollLink } from "react-scroll";
-
+import MobileNavbar from "./game/MobileNavbar";
 const Header = () => {
   return (
     <Container>
       <Logo>Irakli</Logo>
+      <MobileNavbarBox>
+        <MobileNavbar />
+      </MobileNavbarBox>
       <Nav>
         <StyledList>
           <ScrollLink to="hero" smooth={true} duration={500}>
@@ -47,7 +50,6 @@ const Container = styled.header`
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
 
   @media (max-width: 768px) {
-    flex-direction: column;
     padding: 0.5rem;
   }
 `;
@@ -57,7 +59,12 @@ const Logo = styled.h1`
   margin: 0;
   color: #489c9c;
 `;
-
+const MobileNavbarBox = styled.span`
+  display: none;
+  @media (max-width: 568px) {
+    display: flex;
+  }
+`;
 const Nav = styled.ul`
   display: flex;
   gap: 1.5rem;
@@ -68,6 +75,9 @@ const Nav = styled.ul`
 
   @media (max-width: 768px) {
     margin-top: 1rem;
+  }
+  @media (max-width: 548px) {
+    display: none;
   }
 `;
 

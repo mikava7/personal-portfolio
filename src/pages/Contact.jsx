@@ -1,18 +1,29 @@
-import React from "react";
+import React, { useState } from "react";
 import styled from "styled-components";
 import { Formik, Form, Field } from "formik";
 import * as Yup from "yup";
 import { ProjectHeader } from "../Styles/GlobalStyles";
+
 const Contact = () => {
   const contactRef = React.useRef(null);
   const scrollToTop = () => {
     contactRef.current.scrollIntoView({ behavior: "smooth", block: "start" });
   };
+  const [submittedMessages, setSubmittedMessages] = useState([]);
 
   const handleSubmit = (values, { resetForm }) => {
-    // Handle form submission here
-    console.log("Form values:", values);
+    const newMessage = {
+      name: values.name,
+      email: values.email,
+      message: values.message,
+    };
+
+    setSubmittedMessages([...submittedMessages, newMessage]);
+
+    // Use the resetForm function provided by Formik
     resetForm();
+
+    console.log("Form values:", values);
   };
 
   const validationSchema = Yup.object().shape({
@@ -43,50 +54,34 @@ const Contact = () => {
         validationSchema={validationSchema}
         onSubmit={handleSubmit}
       >
-        <ContactForm>
-          <Input type="text" name="name" placeholder="Name" />
-          <Input type="email" name="email" placeholder="Email" />
-          <TextArea as="textarea" name="message" placeholder="Message" />
-          <SubmitButton type="submit">Submit</SubmitButton>
-        </ContactForm>
+        {({ isSubmitting }) => (
+          <ContactForm>
+            <Input type="text" name="name" placeholder="Name" />
+            <Input type="email" name="email" placeholder="Email" />
+            <TextArea as="textarea" name="message" placeholder="Message" />
+            <SubmitButton type="submit" disabled={isSubmitting}>
+              Submit
+            </SubmitButton>
+          </ContactForm>
+        )}
       </Formik>
-      <SocialIcons>
-        <SocialIconLink
-          href="https://github.com"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <i className="fab fa-github"></i>
-        </SocialIconLink>
-        <SocialIconLink
-          href="https://linkedin.com"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <i className="fab fa-linkedin"></i>
-        </SocialIconLink>
-        <SocialIconLink
-          href="https://youtube.com"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <i className="fab fa-youtube"></i>
-        </SocialIconLink>
-      </SocialIcons>
+      {/* ... */}
     </ContactContainer>
   );
 };
 
 export default Contact;
-
 const ContactContainer = styled.div`
+  box-sizing: border-box;
   display: flex;
   flex-direction: column;
   align-items: center;
-  padding: 2rem;
-  background: #f8f8f8;
+  padding: 0 2rem;
+  background-color: #bcbcfa43;
   min-height: 100vh;
-  min-width: 100%;
+  min-width: 80%;
+  outline: 1px solid #bcbcfa43;
+  margin: 0 1rem;
 `;
 
 const ContactInfo = styled.div`
@@ -108,7 +103,7 @@ const ContactForm = styled(Form)`
   flex-direction: column;
   align-items: center;
   margin-bottom: 2rem;
-  max-width: 400px;
+  max-width: 370px;
   width: 100%;
 `;
 
