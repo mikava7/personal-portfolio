@@ -1,27 +1,45 @@
-import React from "react";
+import React, { useRef } from "react";
+import emailjs from "@emailjs/browser";
+
 import styled from "styled-components";
-import { useForm, Controller } from "react-hook-form";
-import * as Yup from "yup";
 import { ProjectHeader } from "../Styles/GlobalStyles";
 
 const Contact = () => {
-  const contactRef = React.useRef(null);
+  const contactRef = useRef();
+  const form = useRef();
+  const [userMessage, setUserMessages] = React.useState([]);
+
   const scrollToTop = () => {
     contactRef.current.scrollIntoView({ behavior: "smooth", block: "start" });
   };
-  const [userMessage, setUserMessages] = React.useState([]);
-  const {
-    control,
-    handleSubmit,
-    reset,
-    formState: { errors },
-  } = useForm();
 
-  const onSubmit = (data) => {
-    setUserMessages([...userMessage, data]);
-    console.log("Form values:", [...userMessage, data]);
+  const onSubmit = (e) => {
+    e.preventDefault();
+    const data = new FormData(form.current);
+    const formData = {};
+    data.forEach((value, key) => {
+      formData[key] = value;
+    });
 
-    reset();
+    setUserMessages([...userMessage, formData]);
+
+    emailjs
+      .sendForm(
+        "service_bdmkicw",
+        "template_t0ndr0f",
+        form.current,
+        "mKoBJSbLktNviHt5s"
+      )
+      .then(
+        (result) => {
+          console.log(result.text);
+        },
+        (error) => {
+          console.log(error.text);
+        }
+      );
+
+    form.current.reset();
   };
 
   return (
@@ -37,52 +55,23 @@ const Contact = () => {
         <Email>Email: i.mikava365@gmail.com</Email>
         <PhoneNumber>Phone: +32 455 11 77 78</PhoneNumber>
       </ContactInfo>
-      <ContactForm onSubmit={handleSubmit(onSubmit)}>
-        <div>
-          <Controller
-            name="name"
-            control={control}
-            defaultValue=""
-            rules={{ required: "Name is required" }}
-            render={({ field }) => <Input {...field} placeholder="Name" />}
-          />
-          {errors.name && <ErrorText>{errors.name.message}</ErrorText>}
-        </div>
-        <div>
-          <Controller
-            name="email"
-            control={control}
-            defaultValue=""
-            rules={{
-              required: "Email is required",
-              pattern: {
-                value: /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i,
-                message: "Invalid email",
-              },
-            }}
-            render={({ field }) => <Input {...field} placeholder="Email" />}
-          />
-          {errors.email && <ErrorText>{errors.email.message}</ErrorText>}
-        </div>
-        <div>
-          <Controller
-            name="message"
-            control={control}
-            defaultValue=""
-            rules={{ required: "Message is required" }}
-            render={({ field }) => (
-              <TextArea {...field} placeholder="Message" />
-            )}
-          />
-          {errors.message && <ErrorText>{errors.message.message}</ErrorText>}
-        </div>
-        <SubmitButton type="submit">Submit</SubmitButton>
+      <ContactForm onSubmit={onSubmit} ref={form}>
+        <label>Name</label>
+        <Input type="text" name="from_name" />
+        <label>Email</label>
+        <Input type="email" name="from_email" />
+
+        <label>Message</label>
+        <TextArea name="message" />
+        <SubmitButton type="submit" value="Send" />
       </ContactForm>
     </ContactContainer>
   );
 };
 
 export default Contact;
+
+// Styled components remain the same
 
 const ContactContainer = styled.div`
   box-sizing: border-box;
@@ -140,7 +129,7 @@ const TextArea = styled.textarea`
   font-size: 1.2rem;
 `;
 
-const SubmitButton = styled.button`
+const SubmitButton = styled.input`
   width: 100%;
   height: 40px;
   background: #007bff;
