@@ -31,12 +31,12 @@ const Descriptions = () => {
   }, []);
 
   return (
-    <>
+    <ProjectCardContainer>
       {projectDescription.map((project) => (
         <ProjectCard key={project.title}>
           <ProjectTitle>{project.title}</ProjectTitle>
           <ProjectDescription>{project.description}</ProjectDescription>
-          <FeatureList ref={scrollRef}>
+          <FeatureList ref={scrollRef} expand={expand}>
             {project?.features
               .slice(0, expand ? project.features.length : 2)
               .map((feature) => (
@@ -79,34 +79,41 @@ const Descriptions = () => {
           )}
         </ProjectCard>
       ))}
-    </>
+    </ProjectCardContainer>
   );
 };
 
 export default Descriptions;
 
-// Styled components...
-
+const ProjectCardContainer = styled.div`
+  max-width: 100%;
+  /* outline: 3px solid green; */
+`;
 const ProjectCard = styled.div`
-  width: 90%;
+  max-width: 100%;
   padding: 20px;
   background-color: #fff;
   border-radius: 0 8px 8px 0;
   box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
   transition: transform 0.3s ease-in-out;
-  height: 541px;
+  height: 543px;
   position: relative;
   overflow-y: hidden;
+  display: flex;
+  flex-direction: column;
+  /* outline: 1px solid blue; */
+
   @media (max-width: 541px) {
     border-radius: 0 0 8px 8px;
-    width: 89%;
-    height: 480px;
+    max-width: 100%;
+    height: 440px;
   }
 `;
 
 const ProjectTitle = styled.h3`
   text-align: center;
   margin-bottom: 10px;
+  margin-top: 0px;
 `;
 
 const ProjectDescription = styled.p`
@@ -128,8 +135,9 @@ const FeatureList = styled.ul`
   list-style: none;
   padding: 0;
   height: 250px;
+  padding: 0.2rem 0.4rem;
   overflow-y: scroll;
-  /* outline: 1px solid red; */
+  background-color: ${(props) => (props.expand ? "wheat" : "")};
   @media (min-width: 555px) and (max-width: 769px) {
     height: 200px;
   }
@@ -173,15 +181,15 @@ const ProjectLinks = styled.div`
   display: flex;
   justify-content: space-between;
   align-items: center;
-  margin-top: 20px;
+  margin-top: auto;
+
   @media (min-width: 555px) and (max-width: 769px) {
-    margin-top: 20px;
     display: flex;
     justify-content: space-around;
     align-items: center;
   }
   @media (max-width: 554px) {
-    margin-top: 20px;
+    margin-top: auto;
     display: flex;
 
     justify-content: space-around;
@@ -193,6 +201,7 @@ const ProjectLink = styled.div`
   display: flex;
   justify-content: space-around;
   align-items: center;
+
   a {
     display: inline-block;
     padding: 10px 20px;

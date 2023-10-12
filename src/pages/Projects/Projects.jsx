@@ -22,10 +22,15 @@ const Projects = () => {
   useEffect(() => {
     const handleScroll = () => {
       const cardPosition = cardRef.current.getBoundingClientRect();
-      const navbarHeight = 200; // Height of the navbar, adjust accordingly
+      const navbarHeight = 200;
+      const mobileView = 600;
       const windowHeight =
         window.innerHeight || document.documentElement.clientHeight;
-      const cardHeight = cardRef.current.clientHeight;
+      const cardHeight =
+        cardRef.current.clientHeight >= mobileView
+          ? 600
+          : cardRef.current.clientHeight;
+
       const adjustedTopPosition = cardPosition.top - navbarHeight;
 
       if (adjustedTopPosition < windowHeight - cardHeight && !hasAnimated) {
@@ -50,7 +55,7 @@ const Projects = () => {
   const frontend = projectDescription[projectIndex].tools.frontend;
   const backend = projectDescription[projectIndex].tools.backend;
 
-  console.log(frontend);
+  // console.log(frontend);
 
   return (
     <ProjectsContainer>
@@ -61,7 +66,7 @@ const Projects = () => {
       >
         Projects
       </ProjectHeader>
-      <div ref={cardRef}>
+      <div>
         <ItemContainer isScrolled={isScrolled} ref={cardRef}>
           <AnimatedImage
             isScrolled={isScrolled}
@@ -69,7 +74,7 @@ const Projects = () => {
             initialDelay={0}
           >
             <ImageContainer>
-              <img src="src/assets/frang.ge.png" alt="reserve" />
+              <img src="/frang.ge.png" alt="reserve" />
               <Tools>
                 {frontend.map((tool, index) => (
                   <Tool key={index}>{tool}</Tool>
@@ -110,37 +115,17 @@ const ProjectsContainer = styled.div`
   }
 `;
 
-const AnimatedElement = styled.div`
-  opacity: ${(props) => (props.isScrolled ? 1 : 0)};
-  margin: 0 auto;
-  display: flex;
-  width: 100%;
-  justify-content: center;
-  align-items: center;
-  ${(props) =>
-    props.isScrolled &&
-    css`
-      animation: ${props.animation} 1.3s ease-in-out ${props.initialDelay}s
-        forwards;
-    `}
-
-  @media (max-width: 541px) {
-    opacity: 1;
-    animation: none; /* Disable animation for mobile view */
-  }
-`;
-
 const ItemContainer = styled.div`
   display: flex;
   margin: 2rem;
 
   border-radius: 1rem;
-  height: 30%; /* Set the height to 30% */
-  width: 90%; /* Set the width to 90% */
-  margin: 0 auto; /* Center the container horizontally */
+  height: 30%;
+  width: 90%;
+  margin: 0 auto;
 
   @media (max-width: 541px) {
-    height: auto; /* Reset height for mobile view */
+    height: auto;
     flex-direction: column;
   }
 `;
@@ -148,23 +133,24 @@ const ItemContainer = styled.div`
 const ImageContainer = styled.div`
   flex: 1;
   width: 90%;
-  height: 585px; /* Set a fixed height */
+  height: 585px;
   display: flex;
   position: relative;
   justify-content: center;
   align-items: center;
-  /* outline: 1px solid red; */
+
   box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
 
   img {
     max-width: 100%;
     max-height: 100%;
-    width: 100%; /* Set a fixed width */
-    height: 100%; /* Set a fixed height */
+    width: 100%;
+    height: 100%;
     border-radius: 8px 0 0 8px;
-    object-fit: cover; /* Retain aspect ratio while covering */
+    object-fit: cover;
     @media (max-width: 541px) {
       border-radius: 8px 8px 0 0;
+      /* height: 50%; */
     }
   }
 
@@ -194,10 +180,10 @@ const Tool = styled.span`
 `;
 const TextContainer = styled.div`
   flex: 2;
-  /* Add any other styles you need */
-
+  width: 90%;
+  /* outline: 1px solid red; */
   @media (max-width: 541px) {
-    width: 100%; /* Adjust width for mobile view */
+    width: 100%;
   }
 `;
 

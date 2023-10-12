@@ -1,6 +1,6 @@
-import React, { useState } from "react";
+import React from "react";
 import styled from "styled-components";
-import { Formik, Form, Field } from "formik";
+import { useForm, Controller } from "react-hook-form";
 import * as Yup from "yup";
 import { ProjectHeader } from "../Styles/GlobalStyles";
 
@@ -9,28 +9,20 @@ const Contact = () => {
   const scrollToTop = () => {
     contactRef.current.scrollIntoView({ behavior: "smooth", block: "start" });
   };
-  const [submittedMessages, setSubmittedMessages] = useState([]);
+  const [userMessage, setUserMessages] = React.useState([]);
+  const {
+    control,
+    handleSubmit,
+    reset,
+    formState: { errors },
+  } = useForm();
 
-  const handleSubmit = (values, { resetForm }) => {
-    const newMessage = {
-      name: values.name,
-      email: values.email,
-      message: values.message,
-    };
+  const onSubmit = (data) => {
+    setUserMessages([...userMessage, data]);
+    console.log("Form values:", [...userMessage, data]);
 
-    setSubmittedMessages([...submittedMessages, newMessage]);
-
-    // Use the resetForm function provided by Formik
-    resetForm();
-
-    console.log("Form values:", values);
+    reset();
   };
-
-  const validationSchema = Yup.object().shape({
-    name: Yup.string().required("Name is required"),
-    email: Yup.string().email("Invalid email").required("Email is required"),
-    message: Yup.string().required("Message is required"),
-  });
 
   return (
     <ContactContainer>
@@ -45,32 +37,53 @@ const Contact = () => {
         <Email>Email: i.mikava365@gmail.com</Email>
         <PhoneNumber>Phone: +32 455 11 77 78</PhoneNumber>
       </ContactInfo>
-      <Formik
-        initialValues={{
-          name: "",
-          email: "",
-          message: "",
-        }}
-        validationSchema={validationSchema}
-        onSubmit={handleSubmit}
-      >
-        {({ isSubmitting }) => (
-          <ContactForm>
-            <Input type="text" name="name" placeholder="Name" />
-            <Input type="email" name="email" placeholder="Email" />
-            <TextArea as="textarea" name="message" placeholder="Message" />
-            <SubmitButton type="submit" disabled={isSubmitting}>
-              Submit
-            </SubmitButton>
-          </ContactForm>
-        )}
-      </Formik>
-      {/* ... */}
+      <ContactForm onSubmit={handleSubmit(onSubmit)}>
+        <div>
+          <Controller
+            name="name"
+            control={control}
+            defaultValue=""
+            rules={{ required: "Name is required" }}
+            render={({ field }) => <Input {...field} placeholder="Name" />}
+          />
+          {errors.name && <ErrorText>{errors.name.message}</ErrorText>}
+        </div>
+        <div>
+          <Controller
+            name="email"
+            control={control}
+            defaultValue=""
+            rules={{
+              required: "Email is required",
+              pattern: {
+                value: /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i,
+                message: "Invalid email",
+              },
+            }}
+            render={({ field }) => <Input {...field} placeholder="Email" />}
+          />
+          {errors.email && <ErrorText>{errors.email.message}</ErrorText>}
+        </div>
+        <div>
+          <Controller
+            name="message"
+            control={control}
+            defaultValue=""
+            rules={{ required: "Message is required" }}
+            render={({ field }) => (
+              <TextArea {...field} placeholder="Message" />
+            )}
+          />
+          {errors.message && <ErrorText>{errors.message.message}</ErrorText>}
+        </div>
+        <SubmitButton type="submit">Submit</SubmitButton>
+      </ContactForm>
     </ContactContainer>
   );
 };
 
 export default Contact;
+
 const ContactContainer = styled.div`
   box-sizing: border-box;
   display: flex;
@@ -98,7 +111,7 @@ const PhoneNumber = styled.p`
   font-size: 1.2rem;
 `;
 
-const ContactForm = styled(Form)`
+const ContactForm = styled.form`
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -107,7 +120,7 @@ const ContactForm = styled(Form)`
   width: 100%;
 `;
 
-const Input = styled(Field)`
+const Input = styled.input`
   width: 100%;
   height: 40px;
   margin-bottom: 1rem;
@@ -117,7 +130,7 @@ const Input = styled(Field)`
   font-size: 1.2rem;
 `;
 
-const TextArea = styled(Field)`
+const TextArea = styled.textarea`
   width: 100%;
   height: 150px;
   margin-bottom: 1rem;
@@ -140,6 +153,13 @@ const SubmitButton = styled.button`
   &:hover {
     background: #0056b3;
   }
+`;
+
+const ErrorText = styled.p`
+  color: red;
+  font-size: 1rem;
+  margin-top: 0.2rem;
+  margin-bottom: 0;
 `;
 
 const SocialIcons = styled.div`
