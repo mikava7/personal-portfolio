@@ -56,10 +56,7 @@ const Hero = () => {
         </LinksContainer>
       </TextContainer>
       <ImageContainer>
-        <img
-          src="https://img.freepik.com/free-vector/businessman-with-superhero-cape_23-2147617939.jpg?w=826&t=st=1687174665~exp=1687175265~hmac=0e0d4eab2e70b53e4bb4a432debe1d1a5fb82b47da0bd744f64097a1b53dc5f2"
-          alt="image"
-        />
+        <img src="public/irakli.png" alt="image" />
       </ImageContainer>
     </HeroContainer>
   );
@@ -84,11 +81,12 @@ const TextContainer = styled.div`
   align-items: center;
   justify-content: center;
   padding: 1rem;
-
   h1 {
     width: 100%;
     font-size: 2rem;
     text-align: center;
+    /* outline: 1px solid red; */
+    height: 5rem;
   }
 
   @media (max-width: 768px) {
@@ -113,8 +111,9 @@ const ImageContainer = styled.div`
   display: flex;
   justify-content: center;
   margin: 0 auto;
+
   img {
-    width: 100%;
+    width: 60%;
     object-fit: contain;
   }
 `;
@@ -141,9 +140,9 @@ const LinksContainer = styled.div`
 const ContactButton = styled.button`
   font-size: 1.6rem;
   border: none;
-  background-color: #007bff;
+  background-color: #004085;
   color: #fff;
-  padding: 10px 20px;
+  padding: 8px 16px;
   border-radius: 5px;
   margin-right: 1rem;
   cursor: pointer;
@@ -155,6 +154,7 @@ const ContactButton = styled.button`
 
   @media (max-width: 768px) {
     margin-bottom: 1rem;
+    font-size: 1.4rem;
   }
 `;
 
@@ -176,7 +176,7 @@ const IconWrapper = styled.a`
   color: #000;
 
   &:hover {
-    transform: scale(1.2);
+    transform: scale(1.1);
   }
 
   img {

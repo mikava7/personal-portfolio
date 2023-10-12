@@ -205,7 +205,7 @@ const ProjectLink = styled.div`
   a {
     display: inline-block;
     padding: 10px 20px;
-    background-color: #007bff;
+    background-color: #004085;
     color: #fff;
     text-decoration: none;
     border-radius: 5px;

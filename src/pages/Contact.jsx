@@ -1,28 +1,56 @@
-import React, { useRef } from "react";
+import React, { useRef, useState } from "react";
 import emailjs from "@emailjs/browser";
 
 import styled from "styled-components";
 import { ProjectHeader } from "../Styles/GlobalStyles";
 
 const Contact = () => {
-  const contactRef = useRef();
-  const form = useRef();
-  const [userMessage, setUserMessages] = React.useState([]);
+  // Refs for elements and state management
+  const contactRef = useRef(); // Reference to the contact element
+  const form = useRef(); // Reference to the form element
+  const [userMessage, setUserMessages] = React.useState([]); // State to store user messages
+  const [isEmailSent, setIsEmailSent] = useState(true); // State to track if the email has been sent successfully
+  const [focusedInput, setFocusedInput] = useState(null); // State to track which input element has focus
 
+  // Function to scroll to the top of the contact section
   const scrollToTop = () => {
     contactRef.current.scrollIntoView({ behavior: "smooth", block: "start" });
   };
 
+  // State for form validation errors
+  const [errors, setErrors] = useState({
+    from_name: "",
+    from_email: "",
+    message: "",
+  });
+
+  // Function to handle form submission
   const onSubmit = (e) => {
     e.preventDefault();
+
+    // Extract form data
     const data = new FormData(form.current);
     const formData = {};
     data.forEach((value, key) => {
       formData[key] = value;
     });
 
+    // Validate the form data
+    if (!validateForm()) {
+      return;
+    }
+
+    // Store user messages
     setUserMessages([...userMessage, formData]);
 
+    // Reset form and clear errors
+    setErrors({
+      from_name: "",
+      from_email: "",
+      message: "",
+    });
+
+    // Simulate sending an email (You can add your email sending logic here)
     emailjs
       .sendForm(
         "service_bdmkicw",
@@ -31,17 +59,74 @@ const Contact = () => {
         "mKoBJSbLktNviHt5s"
       )
       .then(
-        (result) => {
-          console.log(result.text);
-        },
+        (result) => {},
         (error) => {
           console.log(error.text);
         }
       );
 
+    // Reset the form
     form.current.reset();
+
+    // Show success message and hide it after 2 seconds
+    setIsEmailSent(true);
+
+    setTimeout(() => {
+      setIsEmailSent(false);
+    }, 2000); // 2000 milliseconds (2 seconds)
   };
 
+  // Function to validate the form data
+  const validateForm = () => {
+    const data = new FormData(form.current);
+    const formData = {};
+    data.forEach((value, key) => {
+      formData[key] = value;
+    });
+
+    const { from_name, from_email, message } = formData;
+    const newErrors = {};
+
+    // Validate name length
+    if (from_name.trim().length < 3) {
+      newErrors.from_name = "Name must be at least 3 characters.";
+      setFocusedInput("from_name");
+    } else {
+      setFocusedInput(null);
+    }
+
+    // Validate email format
+    const emailPattern = /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i;
+    if (!emailPattern.test(from_email)) {
+      newErrors.from_email = "Invalid email address.";
+      setFocusedInput("from_email");
+    } else {
+      setFocusedInput(null);
+    }
+
+    // Validate message length
+    if (message.trim().length < 5 || message.trim().length > 400) {
+      newErrors.message = "Message must be between 5 and 400 characters.";
+      setFocusedInput("message");
+    } else {
+      setFocusedInput(null);
+    }
+
+    // Check if name and message are not empty
+    if (from_name.trim() === "") {
+      newErrors.from_name = "Name is required.";
+      setFocusedInput("from_name");
+    }
+
+    if (message.trim() === "") {
+      newErrors.message = "Message is required.";
+      setFocusedInput("message");
+    }
+
+    // Set errors and return whether the form is valid
+    setErrors(newErrors);
+    return Object.keys(newErrors).length === 0;
+  };
   return (
     <ContactContainer>
       <ProjectHeader
@@ -55,16 +140,24 @@ const Contact = () => {
         <Email>Email: i.mikava365@gmail.com</Email>
         <PhoneNumber>Phone: +32 455 11 77 78</PhoneNumber>
       </ContactInfo>
-      <ContactForm onSubmit={onSubmit} ref={form}>
-        <label>Name</label>
-        <Input type="text" name="from_name" />
-        <label>Email</label>
-        <Input type="email" name="from_email" />
+      {isEmailSent ? ( // Conditionally render based on the email being sent
+        <SuccessMessage>
+          Thank you for your message! I will get back to you shortly.
+        </SuccessMessage>
+      ) : (
+        <ContactForm onSubmit={onSubmit} ref={form}>
+          <Input type="text" name="from_name" />
+          {errors.from_name && <ErrorText>{errors.from_name}</ErrorText>}
 
-        <label>Message</label>
-        <TextArea name="message" />
-        <SubmitButton type="submit" value="Send" />
-      </ContactForm>
+          <Input type="email" name="from_email" />
+          {errors.from_email && <ErrorText>{errors.from_email}</ErrorText>}
+
+          <TextArea name="message" />
+          {errors.message && <ErrorText>{errors.message}</ErrorText>}
+
+          <SubmitButton type="submit" value="Send" />
+        </ContactForm>
+      )}
     </ContactContainer>
   );
 };
@@ -133,7 +226,7 @@ const SubmitButton = styled.input`
   width: 100%;
   height: 40px;
   background: #007bff;
-  color: #fff;
+  color: #dadada;
   border: none;
   border-radius: 5px;
   font-size: 1.2rem;
@@ -166,4 +259,15 @@ const SocialIconLink = styled.a`
   &:hover {
     color: #0056b3;
   }
+`;
+const SuccessMessage = styled.div`
+  max-width: 90%;
+  width: 500px;
+  background-color: #214a22;
+  color: #fff;
+  padding: 1rem;
+  border-radius: 5px;
+  text-align: center;
+  font-size: 1.2rem;
+  margin-top: 1rem;
 `;
