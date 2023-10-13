@@ -17,19 +17,16 @@ const App = () => {
   return (
     <MainContainer>
       <Header />
-      {/* <Routes>
-        <Route path="/example" element={<Example />} />
-      </Routes> */}
-      <Element name="hero">
-        <Hero />
-      </Element>
-      <Element name="projects">
-        <Projects />
-      </Element>
-      <Element name="contact">
-        <Contact />
-      </Element>
-      {/* <PuzzleGame /> */}
+
+      <Routes>
+        <Route path="/" element={<Home />} />
+
+        <Route path="/games" element={<Games />} />
+
+        <Route path="/games/tictactoe" element={<TicTacToe />} />
+
+        <Route path="/games/memoryGame" element={<MemoryGame />} />
+      </Routes>
     </MainContainer>
   );
 };

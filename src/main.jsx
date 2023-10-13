@@ -5,8 +5,8 @@ import { BrowserRouter } from "react-router-dom";
 import GlobalStyles from "./Styles/GlobalStyles.js";
 ReactDOM.createRoot(document.getElementById("root")).render(
   <React.StrictMode>
-    <GlobalStyles />
     <BrowserRouter>
+      <GlobalStyles />
       <App />
     </BrowserRouter>
   </React.StrictMode>

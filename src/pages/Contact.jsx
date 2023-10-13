@@ -9,7 +9,7 @@ const Contact = () => {
   const contactRef = useRef(); // Reference to the contact element
   const form = useRef(); // Reference to the form element
   const [userMessage, setUserMessages] = React.useState([]); // State to store user messages
-  const [isEmailSent, setIsEmailSent] = useState(true); // State to track if the email has been sent successfully
+  const [isEmailSent, setIsEmailSent] = useState(false); // State to track if the email has been sent successfully
   const [focusedInput, setFocusedInput] = useState(null); // State to track which input element has focus
 
   // Function to scroll to the top of the contact section

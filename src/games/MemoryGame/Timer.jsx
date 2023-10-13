@@ -1,5 +1,7 @@
 import React, { useState, useEffect } from "react";
 import styled from "styled-components";
+import { FaPlay, FaPause } from "react-icons/fa"; // Import play and pause icons
+
 const Timer = ({ onTimerComplete }) => {
   const [time, setTime] = useState(0);
   const [isPaused, setIsPaused] = useState(false);
@@ -36,30 +38,50 @@ const Timer = ({ onTimerComplete }) => {
 
   return (
     <Container>
-      <div>Timer: {formatTime(time)}</div>
-      {isPaused ? (
-        <button onClick={handleResume}>Reprendre</button>
-      ) : (
-        <button onClick={handlePause}>Pause</button>
-      )}
+      <TimerDisplay>
+        {isPaused ? (
+          <FaPlay onClick={handleResume} />
+        ) : (
+          <FaPause onClick={handlePause} />
+        )}{" "}
+        {formatTime(time)}
+      </TimerDisplay>
     </Container>
   );
 };
 
 export default Timer;
+
 const Container = styled.div`
-  border: 2px solid #a4a4ff;
-  padding: 1rem;
+  display: flex;
+  align-items: flex-end;
+  justify-content: flex-end;
+  background-color: #f3f3f3;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
   border-radius: 1rem;
-  font-size: 2rem;
-  position: absolute;
-  top: 50%;
-  left: 10%;
-  button {
-    border: none;
-    background-color: #a4a4ff;
-    border-radius: 16px;
-    width: 13rem;
-    margin-top: 2rem;
+  padding: 8px 16px;
+  @media (max-width: 420px) {
+    padding: 6px 12px;
+
+    border-radius: 0.5rem;
+  }
+`;
+
+const TimerDisplay = styled.div`
+  display: flex;
+  align-items: center;
+  font-size: 1.2rem;
+  margin-right: 0.5rem;
+
+  @media (max-width: 420px) {
+    font-size: 1rem;
+    margin-right: 0.3rem;
+  }
+
+  svg {
+    cursor: pointer;
+    font-size: 1.5rem;
+    margin-right: 0.5rem;
+    color: #6e6ef8;
   }
 `;

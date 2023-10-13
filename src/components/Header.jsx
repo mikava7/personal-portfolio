@@ -2,34 +2,35 @@
 import React from "react";
 import styled from "styled-components";
 import { Link as ScrollLink } from "react-scroll";
+import { Link } from "react-router-dom";
 import MobileNavbar from "./game/MobileNavbar";
 const Header = () => {
   return (
     <Container>
-      <Logo>Irakli</Logo>
+      <Logo>
+        <StyledLink to="/">Irakli</StyledLink>
+      </Logo>
       <MobileNavbarBox>
         <MobileNavbar />
       </MobileNavbarBox>
       <Nav>
         <StyledList>
           <ScrollLink to="hero" smooth={true} duration={500}>
-            Home
+            <StyledLink to="/">Home</StyledLink>
           </ScrollLink>
         </StyledList>
-        <StyledList>
+        <StyledList to="/home">
           <ScrollLink to="projects" smooth={true} duration={500}>
-            Projects
+            <StyledLink to="/">Projects</StyledLink>
           </ScrollLink>
         </StyledList>
         <StyledList>
           <ScrollLink to="contact" smooth={true} duration={500}>
-            Contact
+            <StyledLink to="/">Contact</StyledLink>
           </ScrollLink>
         </StyledList>
         <StyledList>
-          <ScrollLink to="PuzzleGame" smooth={true} duration={500}>
-            games
-          </ScrollLink>
+          <StyledLink to="/games">games</StyledLink>
         </StyledList>
       </Nav>
     </Container>
@@ -86,6 +87,17 @@ const StyledList = styled.li`
   color: #1e1f21;
   border-radius: 12px;
   transition: transform 0.3s ease;
+  &:hover {
+    color: #484e4e;
+    transform: scale(1.1);
+  }
+`;
+const StyledLink = styled(Link)`
+  cursor: pointer;
+  color: #1e1f21;
+  border-radius: 12px;
+  transition: transform 0.3s ease;
+  text-decoration: none;
 
   &:hover {
     color: #484e4e;

@@ -5,6 +5,7 @@ import WinModal from "./WinModal";
 import PlayerBoard from "./PlayerBoard";
 import { cards } from "./data";
 import styled from "styled-components";
+
 const MemoryGame = () => {
   const [shuffledCards, setShuffledCards] = useState([]);
   const [selectedCards, setSelectedCards] = useState([]);
@@ -15,7 +16,7 @@ const MemoryGame = () => {
   const [topPlayers, setTopPlayers] = useState([
     { name: "Irakli", time: 22 },
     { name: "Giuse", time: 18 },
-    { name: "Giuse", time: 21 },
+    { name: "Giuse", time: 121 },
   ]);
 
   useEffect(() => {
@@ -96,22 +97,21 @@ const MemoryGame = () => {
 
   return (
     <Container>
-      <h1>Tester votre Mémoire.</h1>
-      <PlayerBoard sortedTopPlayers={sortedTopPlayers} />
-
-      <RestartButton onClick={handleRestartGame}>
-        {" "}
-        Recommencer le jeu.
-      </RestartButton>
+      <TopPart>
+        <PlayerBoard sortedTopPlayers={sortedTopPlayers} />
+        {isGameStarted ? (
+          <TimeAndRestart>
+            <Timer onTimerComplete={handleTimerComplete} />
+            <RestartButton onClick={handleRestartGame}> Restart</RestartButton>
+          </TimeAndRestart>
+        ) : null}
+      </TopPart>
 
       {isGameWon ? (
         <WinModal gameTime={gameTime} onClose={handleWinModalClose} />
       ) : (
         <MemoryBoard>
-          {isGameStarted ? (
-            <Timer onTimerComplete={handleTimerComplete} />
-          ) : null}
-          <div className="memory-board">
+          <Board>
             {shuffledCards.map((card) => (
               <Card
                 key={card.id}
@@ -122,7 +122,7 @@ const MemoryGame = () => {
                 isSelected={selectedCards.includes(card.id)}
               />
             ))}
-          </div>
+          </Board>
         </MemoryBoard>
       )}
     </Container>
@@ -132,28 +132,65 @@ const MemoryGame = () => {
 export default MemoryGame;
 
 const Container = styled.div`
+  max-width: 100%;
+  height: 100vh;
   display: flex;
   align-items: center;
-  justify-content: center;
+  /* justify-content: center; */
   flex-direction: column;
   position: relative;
   background-color: #ead88940;
+  margin: 0;
+  padding: 0;
+  /* outline: 1px solid red; */
 `;
-
-const MemoryBoard = styled.div`
-  gap: 2rem;
-  button {
-    font-size: 2rem;
-
-    align-items: center;
+const TopPart = styled.div`
+  height: 25%;
+  @media (max-width: 441px) {
   }
 `;
+const MemoryBoard = styled.div`
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+  align-items: center;
+  /* outline: 1px solid red; */
+  button {
+    font-size: 2rem;
+    margin-top: 2rem;
+  }
+
+  @media (max-width: 420px) {
+    max-width: 100%;
+    gap: 0.4rem;
+  }
+`;
+
+const TimeAndRestart = styled.div`
+  display: flex;
+
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+  margin-top: 0.5rem;
+`;
 const RestartButton = styled.div`
-  font-size: 2rem;
-  padding: 1rem;
-  background-color: #fade6e;
-  position: absolute;
-  left: 10%;
-  top: 15%;
-  border-radius: 12px;
+  background-color: #004085;
+  color: #fff;
+  padding: 8px 16px;
+  border-radius: 1rem;
+  font-size: 1.2rem;
+`;
+
+const Board = styled.div`
+  display: grid;
+  gap: 1rem;
+  padding: 1rem 0;
+  grid-template-columns: repeat(4, 1fr);
+  place-items: center;
+  justify-content: center;
+
+  @media (max-width: 420px) {
+    gap: 0.5rem;
+  }
 `;
