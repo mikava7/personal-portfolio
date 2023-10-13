@@ -1,5 +1,4 @@
 import React, { useState } from "react";
-
 import styled from "styled-components";
 
 const WinModal = ({ gameTime, onClose }) => {
@@ -24,98 +23,102 @@ const WinModal = ({ gameTime, onClose }) => {
   };
 
   return (
-    <Modal>
-      <div>
-        <h1>Félicitations !</h1>
-        <p>Vous avez gagné la partie !</p>
-        <p>Votre temps: {gameTime} secondes</p>
-
-        <label>
-          <span>Entrez votre nom:</span>
-          <input
-            type="text"
-            placeholder="Entrez votre nom"
-            value={name}
-            onChange={handleNameChange}
-          />
-        </label>
-        <SubmitButton onClick={handleSubmit}>Submit</SubmitButton>
+    <ModalBackground>
+      <ModalContent>
+        <ModalHeader>
+          <h1>Congratulations !</h1>
+          <p>You won the game!</p>
+          <p>Your time: {gameTime} seconds</p>
+        </ModalHeader>
+        <ModalForm>
+          <label>
+            <span>Enter your name:</span>
+            <input
+              type="text"
+              placeholder="Entrez votre nom"
+              value={name}
+              onChange={handleNameChange}
+            />
+          </label>
+          <SubmitButton onClick={handleSubmit}>Submit</SubmitButton>
+        </ModalForm>
         <CloseButton onClick={handleClose}>X</CloseButton>
-      </div>
-    </Modal>
+      </ModalContent>
+    </ModalBackground>
   );
 };
 
 export default WinModal;
-const Modal = styled.div`
-  min-width: 30rem;
-  min-height: 30rem;
 
+const ModalBackground = styled.div`
   position: fixed;
-  top: 50%;
+  top: 0;
   left: 0;
-
   width: 100%;
   height: 100%;
   display: flex;
   align-items: center;
   justify-content: center;
-  background-color: #efd2d2;
-  position: relative;
+  background-color: rgba(0, 0, 0, 0.6);
+  z-index: 100;
+`;
 
-  div {
-    background-color: #e3c7c7;
-    min-width: 20rem;
-    min-height: 20rem;
-    text-align: center;
-    position: relative;
-    p {
-      font-size: 1.2rem;
-      border-bottom: 2px dashed blue;
-    }
+const ModalContent = styled.div`
+  background-color: #fff;
+  border-radius: 8px;
+  max-width: 300px;
+  padding: 20px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+`;
+
+const ModalHeader = styled.div`
+  text-align: center;
+  p {
+    font-size: 1.2rem;
+    margin: 10px 0;
+    border-bottom: 2px dashed #007bff;
   }
+`;
+
+const ModalForm = styled.div`
   label {
     display: flex;
     flex-direction: column;
-    margin-bottom: 1rem;
+    margin-bottom: 15px;
     input {
-      height: 2rem;
-      width: 80%;
-      align-self: center;
-      border-radius: 12px;
+      height: 40px;
+      border: 1px solid #ccc;
+      border-radius: 8px;
+      padding: 8px;
     }
     span {
-      margin-bottom: 0.5rem;
-    }
-    input::placeholder {
-      color: #999;
-      padding-left: 0.5rem;
-      font-style: italic;
+      margin-bottom: 5px;
     }
   }
 `;
-const CloseButton = styled.button`
-  font-size: 1rem;
-  position: absolute;
-  top: 5%;
-  right: 3%;
-  border: none;
-  border-radius: 50%;
-  background-color: transparent;
-  height: 1rem;
-  cursor: pointer;
-`;
+
 const SubmitButton = styled.button`
-  width: 80%;
-  height: 2.8rem;
-  font-size: 1.5rem;
+  width: 100%;
+  height: 40px;
+  font-size: 1rem;
+  background-color: #007bff;
+  color: #fff;
   border: none;
-  background-color: #9a5de4;
-  color: white;
+  border-radius: 8px;
   cursor: pointer;
-  border-radius: 12px;
   &:hover {
-    background-color: white;
-    color: #5d5de4;
+    background-color: #0056b3;
   }
 `;
+
+const CloseButton = styled.button`
+  position: absolute;
+  top: 5px;
+  right: 5px;
+  font-size: 1rem;
+  border: none;
+  background-color: transparent;
+  cursor: pointer;
+`;
+
+// You can adjust the styling further if needed.

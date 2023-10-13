@@ -13,10 +13,12 @@ const MemoryGame = () => {
   const [gameTime, setGameTime] = useState(0);
   const [isGameWon, setIsGameWon] = useState(false);
   const [isGameStarted, setIsGameStarted] = useState(false);
+  const [userCompetedTime, setUserCompetedTime] = useState(null);
+
   const [topPlayers, setTopPlayers] = useState([
-    { name: "Irakli", time: 22 },
-    { name: "Giuse", time: 18 },
-    { name: "Giuse", time: 121 },
+    { name: "Irakli", time: 26 },
+    { name: "Giuse", time: 28 },
+    { name: "Tamara", time: 27 },
   ]);
 
   useEffect(() => {
@@ -26,6 +28,7 @@ const MemoryGame = () => {
   useEffect(() => {
     if (matchedCards.length === cards.length) {
       setIsGameWon(true);
+      setUserCompetedTime(gameTime); // Set the user's competed time
     }
   }, [matchedCards]);
 
@@ -108,7 +111,7 @@ const MemoryGame = () => {
       </TopPart>
 
       {isGameWon ? (
-        <WinModal gameTime={gameTime} onClose={handleWinModalClose} />
+        <WinModal gameTime={userCompetedTime} onClose={handleWinModalClose} />
       ) : (
         <MemoryBoard>
           <Board>
