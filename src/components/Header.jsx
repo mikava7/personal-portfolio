@@ -4,6 +4,7 @@ import styled from "styled-components";
 import { Link as ScrollLink } from "react-scroll";
 import { Link } from "react-router-dom";
 import MobileNavbar from "./game/MobileNavbar";
+import { StyledLink } from "../Styles/GlobalStyles";
 const Header = () => {
   return (
     <Container>
@@ -87,18 +88,6 @@ const StyledList = styled.li`
   color: #1e1f21;
   border-radius: 12px;
   transition: transform 0.3s ease;
-  &:hover {
-    color: #484e4e;
-    transform: scale(1.1);
-  }
-`;
-const StyledLink = styled(Link)`
-  cursor: pointer;
-  color: #1e1f21;
-  border-radius: 12px;
-  transition: transform 0.3s ease;
-  text-decoration: none;
-
   &:hover {
     color: #484e4e;
     transform: scale(1.1);

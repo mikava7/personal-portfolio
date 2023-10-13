@@ -1,7 +1,8 @@
 import React, { useState } from "react";
 import styled, { keyframes } from "styled-components";
 import { Link as ScrollLink } from "react-scroll"; // Import ScrollLink from react-scroll
-
+import { Link } from "react-router-dom";
+import { StyledLink } from "../../Styles/GlobalStyles";
 const MobileNavbar = () => {
   const [isOpen, setIsOpen] = useState(false);
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -21,12 +22,14 @@ const MobileNavbar = () => {
         <MobileMenu>
           <MenuItem>
             <ScrollLink
-              to="hero" // Use the same target IDs as in your Header component
+              to="hero"
               smooth={true}
               duration={500}
-              onClick={toggleMenu} // Close the mobile menu when a link is clicked
+              onClick={toggleMenu}
             >
-              Home
+              <StyledLink to="/" mobileview={true}>
+                Home
+              </StyledLink>
             </ScrollLink>
           </MenuItem>
           <MenuItem>
@@ -36,7 +39,9 @@ const MobileNavbar = () => {
               duration={500}
               onClick={toggleMenu}
             >
-              Projects
+              <StyledLink to="/" mobileview={true}>
+                Projects
+              </StyledLink>
             </ScrollLink>
           </MenuItem>
           <MenuItem>
@@ -46,18 +51,16 @@ const MobileNavbar = () => {
               duration={500}
               onClick={toggleMenu}
             >
-              Contact
+              <StyledLink to="/" mobileview={true}>
+                Contact
+              </StyledLink>
             </ScrollLink>
           </MenuItem>
           <MenuItem>
-            <ScrollLink
-              to="PuzzleGame"
-              smooth={true}
-              duration={500}
-              onClick={toggleMenu}
-            >
+            <StyledLink to="/games" onClick={toggleMenu} mobileview={true}>
+              {" "}
               Games
-            </ScrollLink>
+            </StyledLink>
           </MenuItem>
         </MobileMenu>
       )}
@@ -133,10 +136,10 @@ const MobileMenu = styled.ul`
   width: 100vw;
   height: 100vh;
   box-shadow: 0 0 10px #85888c;
-  margin: 0 0 0 -400px;
+  margin: 0 0 0 -450px;
   padding: 50px;
   padding-top: 5rem;
-  background-color: grey;
+  background-color: #5a3085;
   color: black;
 
   -webkit-font-smoothing: antialiased;
@@ -149,11 +152,15 @@ const MenuItem = styled.li`
   margin: 0;
   padding: 1.5rem 0;
   font-size: 1.4rem;
-  color: #fff;
+  color: #f5f5f5;
   cursor: pointer;
+  background-color: transparent;
   transition: background-color 0.3s ease;
 
   &:hover {
-    background-color: #36383f;
+    background-color: #9e7fbe;
+    color: #000;
+
+    width: 120%;
   }
 `;

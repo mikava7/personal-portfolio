@@ -1,6 +1,6 @@
 import { createGlobalStyle } from "styled-components";
 import styled, { keyframes, css } from "styled-components";
-
+import { Link } from "react-router-dom";
 const GlobalStyles = createGlobalStyle`
   /* Add your global styles here */
   html,
@@ -100,4 +100,18 @@ export const slideInFromRight = keyframes`
     opacity: 1;
   }
 `;
+
+export const StyledLink = styled(Link)`
+  cursor: pointer;
+  color: #1e1f21;
+  border-radius: 12px;
+  transition: transform 0.3s ease;
+  text-decoration: none;
+  color: ${(props) => (props.mobileview ? "white" : "black")};
+  &:hover {
+    /* color: #000; */
+    transform: scale(1.1);
+  }
+`;
+
 export default GlobalStyles;
